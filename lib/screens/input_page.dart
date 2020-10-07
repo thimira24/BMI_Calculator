@@ -1,10 +1,12 @@
+import 'package:bmi_calculator/components/reusable_card.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'reusable_card.dart';
-import 'icon_content.dart';
-import 'constants.dart';
+import '../components/icon_content.dart';
+import '../constants.dart';
 import 'results_page.dart';
+import '../components/bottom_button.dart';
+import '../components/round_icon_button.dart';
 
 enum Gender {
   male,
@@ -94,9 +96,9 @@ class _InputPageState extends State<InputPage> {
                     SliderTheme(
                       data: SliderTheme.of(context).copyWith(
                         thumbShape:
-                            RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                        RoundSliderThumbShape(enabledThumbRadius: 15.0),
                         overlayShape:
-                            RoundSliderOverlayShape(overlayRadius: 30.0),
+                        RoundSliderOverlayShape(overlayRadius: 30.0),
                         thumbColor: Color(0xFFe91e63),
                         overlayColor: Color(0x29e91e63),
                         activeTrackColor: Colors.white,
@@ -119,130 +121,102 @@ class _InputPageState extends State<InputPage> {
             ),
             Expanded(
                 child: Row(
-              children: [
-                Expanded(
-                  child: ReusableCard(
-                    colour: kActiveCardColor,
-                    cardChild: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'WEIGHT',
-                          style: kLableTextStyle,
-                        ),
-                        Text(
-                          weight.toString(),
-                          style: kNumberTextStyle,
-                        ),
-                        Row(
+                  children: [
+                    Expanded(
+                      child: ReusableCard(
+                        colour: kActiveCardColor,
+                        cardChild: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            RoundIconButton(
-                              icon: FontAwesomeIcons.minus,
-                              onPressed: () {
-                                setState(() {
-                                  weight--;
-                                });
-                              },
+                            Text(
+                              'WEIGHT',
+                              style: kLableTextStyle,
                             ),
-                            SizedBox(
-                              width: 10.0,
+                            Text(
+                              weight.toString(),
+                              style: kNumberTextStyle,
                             ),
-                            RoundIconButton(
-                              icon: FontAwesomeIcons.plus,
-                              onPressed: () {
-                                setState(() {
-                                  weight++;
-                                });
-                              },
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                RoundIconButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    setState(() {
+                                      weight--;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 10.0,
+                                ),
+                                RoundIconButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: () {
+                                    setState(() {
+                                      weight++;
+                                    });
+                                  },
+                                ),
+                              ],
                             ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                Expanded(
-                  child: ReusableCard(
-                    colour: kActiveCardColor,
-                    cardChild: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'AGE',
-                          style: kLableTextStyle,
-                        ),
-                        Text(
-                          age.toString(),
-                          style: kNumberTextStyle,
-                        ),
-                        Row(
+                    Expanded(
+                      child: ReusableCard(
+                        colour: kActiveCardColor,
+                        cardChild: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            RoundIconButton(
-                              icon: FontAwesomeIcons.minus,
-                              onPressed: () {
-                                setState(() {
-                                  age--;
-                                });
-                              },
+                            Text(
+                              'AGE',
+                              style: kLableTextStyle,
                             ),
-                            SizedBox(
-                              width: 10.0,
+                            Text(
+                              age.toString(),
+                              style: kNumberTextStyle,
                             ),
-                            RoundIconButton(
-                              icon: FontAwesomeIcons.plus,
-                              onPressed: () {
-                                setState(() {
-                                  age++;
-                                });
-                              },
-                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                RoundIconButton(
+                                  icon: FontAwesomeIcons.minus,
+                                  onPressed: () {
+                                    setState(() {
+                                      age--;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 10.0,
+                                ),
+                                RoundIconButton(
+                                  icon: FontAwesomeIcons.plus,
+                                  onPressed: () {
+                                    setState(() {
+                                      age++;
+                                    });
+                                  },
+                                ),
+                              ],
+                            )
                           ],
-                        )
-                      ],
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              ],
-            )),
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => ResultsPage()));
-              },
-              child: Container(
-                child: Center(
-                    child: Text(
-                  'Calculate',
-                  style: kLargeButtonTextStyle,
+                  ],
                 )),
-                color: kBottomContainerColor,
-                margin: EdgeInsets.only(top: 10.0),
-                width: double.infinity,
-                height: kBottomContainerHeight,
-              ),
-            ),
+            BottomButton(buttonTitle: 'CALCULATE', onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => ResultsPage()));
+            },),
           ],
         ));
   }
 }
 
-class RoundIconButton extends StatelessWidget {
-  RoundIconButton({@required this.icon, @required this.onPressed});
 
-  final IconData icon;
-  final Function onPressed;
 
-  @override
-  Widget build(BuildContext context) {
-    return RawMaterialButton(
-      child: Icon(icon),
-      onPressed: onPressed,
-      elevation: 6.0,
-      constraints: BoxConstraints.tightFor(width: 56.0, height: 56.0),
-      shape: CircleBorder(),
-      fillColor: Color(0xFF4C4F5E),
-    );
-  }
-}
+
